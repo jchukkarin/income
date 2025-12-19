@@ -1,0 +1,35 @@
+name: Next.js Prisma CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ ดึงโค้ดจาก GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ ติดตั้ง Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3️⃣ ติดตั้ง dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4️⃣ Prisma Generate (ไม่ต่อ DB)
+      - name: Prisma Generate
+        run: npx prisma generate
+
+      # 5️⃣ Build Next.js
+      - name: Build project
+        run: npm run build
