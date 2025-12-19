@@ -43,71 +43,96 @@ export default function RecordForm({ initialData }: RecordFormProps) {
     }
 
     return (
-        <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
-            <h1 className="text-2xl font-bold mb-6 text-center">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
+
+            {/* Title */}
+            <h1 className="text-2xl font-bold text-center text-gray-800">
                 {isEdit ? '✏️ แก้ไขรายการ' : '➕ เพิ่มรายการ'}
             </h1>
 
             {/* ประเภทรายการ */}
-            <label className="block mb-2 font-medium">ประเภทรายการ</label>
-            <select
-                value={form.type}
-                onChange={(e) =>
-                    setForm({ ...form, type: e.target.value as 'income' | 'expense' })
-                }
-                className={`w-full p-2 rounded border mb-4
-            ${form.type === 'income' ? 'border-green-400' : 'border-red-400'}`}
-            >
-                <option value="income">💰 รายรับ</option>
-                <option value="expense">💸 รายจ่าย</option>
-            </select>
+            <div>
+                <label className="block mb-1 text-sm  font-medium text-gray-700">
+                    ประเภทรายการ
+                </label>
+                <select
+                    value={form.type}
+                    onChange={(e) =>
+                        setForm({ ...form, type: e.target.value as 'income' | 'expense' })
+                    }
+                    className={`w-full text-sm text-gray-700 rounded-lg border px-3 py-2 focus:outline-none focus:ring-2
+              ${form.type === 'income'
+                            ? 'border-green-400 focus:ring-green-300'
+                            : 'border-red-400 focus:ring-red-300'
+                        }`}
+                >
+                    <option className="text-gray-700" value="">เลือกประเภท</option>
+                    <option className="text-gray-700" value="income">💰 รายรับ</option>
+                    <option className="text-gray-700" value="expense">💸 รายจ่าย</option>
+                </select>
+            </div>
 
             {/* จำนวนเงิน */}
-            <label className="block mb-2 font-medium">จำนวนเงิน</label>
-            <input
-                type="number"
-                placeholder="เช่น 500"
-                value={form.amount}
-                onChange={(e) => setForm({ ...form, amount: e.target.value })}
-                className="w-full p-2 rounded border mb-4 focus:outline-none focus:ring"
-            />
+            <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                    จำนวนเงิน
+                </label>
+                <input
+                    type="number"
+                    placeholder="เช่น 500"
+                    value={form.amount}
+                    onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                    className="w-full text-sm text-gray-700 rounded-lg border-green-400 border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+            </div>
 
-            {/* เหตุผล */}
-            <label className="block mb-2 font-medium">รายละเอียด</label>
-            <input
-                placeholder="เช่น เงินเดือน / ค่าอาหาร"
-                value={form.reason}
-                onChange={(e) => setForm({ ...form, reason: e.target.value })}
-                className="w-full p-2 rounded border mb-4"
-            />
+            {/* รายละเอียด */}
+            <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                    รายละเอียด
+                </label>
+                <input
+                    placeholder="เช่น เงินเดือน / ค่าอาหาร"
+                    value={form.reason}
+                    onChange={(e) => setForm({ ...form, reason: e.target.value })}
+                    className="w-full rounded-lg border-gray-400 border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+            </div>
 
             {/* วันที่ */}
-            <label className="block mb-2 font-medium">วันที่</label>
-            <input
-                type="date"
-                value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full p-2 rounded border mb-6"
-            />
+            <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                    วันที่
+                </label>
+                <input
+                    type="date"
+                    value={form.date}
+                    onChange={(e) => setForm({ ...form, date: e.target.value })}
+                    className="w-full rounded-lg border-gray-400 border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+            </div>
 
             {/* ปุ่ม */}
-            <button
-                onClick={submit}
-                className={`w-full py-2 rounded text-white font-semibold
-            ${isEdit
-                        ? 'bg-blue-500 hover:bg-blue-600'
-                        : 'bg-green-500 hover:bg-green-600'
-                    }`}
-            >
-                {isEdit ? 'บันทึกการแก้ไข' : 'บันทึกข้อมูล'}
-            </button>
+            <div className="space-y-3 pt-2">
+                <button
+                    onClick={submit}
+                    className={`w-full py-2.5 rounded-lg text-white font-semibold transition
+              ${isEdit
+                            ? 'bg-blue-500 hover:bg-blue-600'
+                            : 'bg-green-500 hover:bg-green-600'
+                        }`}
+                >
+                    {isEdit ? 'บันทึกการแก้ไข' : 'บันทึกข้อมูล'}
+                </button>
 
-            <button
-                onClick={() => router.back()}
-                className="w-full mt-3 py-2 rounded border"
-            >
-                ยกเลิก
-            </button>
+                <button
+                    onClick={() => router.back()}
+                    className="w-full py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+                >
+                    ยกเลิก
+                </button>
+            </div>
         </div>
+
     )
 }

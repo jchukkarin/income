@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
+import { Providers } from '@/components/providers'
+import './globals.css'
 
-export const metadata: Metadata = { 
+
+export const metadata: Metadata = {
   title: 'Income Expense App',
   description: 'บันทึกรายรับรายจ่าย',
 }
@@ -13,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="th">
       <body>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
