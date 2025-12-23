@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+
+/* globals.css */
+.btn {
+  @apply px-4 py-2 border rounded-lg bg-white text-sm hover:bg-gray-100;
+}
