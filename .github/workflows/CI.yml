@@ -10,9 +10,6 @@
     build:
       runs-on: ubuntu-latest
 
-      env:
-        DATABASE_URL: "postgresql://user:1234@localhost:5432/income"
-
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
