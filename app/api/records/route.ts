@@ -1,5 +1,8 @@
+export const dynamic = 'force-dynamic'
+
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+
 
 // GET: ดึงรายการทั้งหมด
 export async function GET() {
@@ -11,9 +14,9 @@ export async function GET() {
 }
 
 // POST: เพิ่มรายการใหม่
-export async function POST(req: Request) {
+export async function POST(request: Request) {
     try {
-        const body = await req.json()
+        const body = await request.json()
 
         // Validate required fields
         if (!body.amount || !body.date) {
@@ -23,8 +26,8 @@ export async function POST(req: Request) {
         const record = await prisma.record.create({
             data: {
                 type: body.type,
-                amount: Number(body.amount), // Ensure it's a number
-                reason: body.reason || '',
+                amount: body.amount,
+                reason: body.reason,
                 date: new Date(body.date),
             },
         })
