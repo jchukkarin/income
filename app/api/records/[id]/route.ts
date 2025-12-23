@@ -1,29 +1,32 @@
-import { prisma } from '@/lib/prisma'
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
+import { prisma } from "@/lib/prisma"
 
-
-export async function GET(_: Request, { params }: any) {
-    const { id } = await params
-    const data = await prisma.record.findUnique({
-        where: { id: Number(id) }
-    })
-    return NextResponse.json(data)
+type Params = {
+  params: { id: string }
 }
 
+// PUT: แก้ไขข้อมูล
+export async function PUT(req: Request, { params }: Params) {
+  const body = await req.json()
 
-export async function PUT(req: Request, { params }: any) {
-    const { id } = await params
-    const body = await req.json()
-    const data = await prisma.record.update({
-        where: { id: Number(id) },
-        data: body
-    })
-    return NextResponse.json(data)
+  const record = await prisma.record.update({
+    where: { id: Number(params.id) },
+    data: {
+      type: body.type,
+      amount: body.amount,
+      reason: body.reason,
+      date: new Date(body.date),
+    },
+  })
+
+  return NextResponse.json(record)
 }
 
+// DELETE: ลบข้อมูล
+export async function DELETE(_: Request, { params }: Params) {
+  await prisma.record.delete({
+    where: { id: Number(params.id) },
+  })
 
-export async function DELETE(_: Request, { params }: any) {
-    const { id } = await params
-    await prisma.record.delete({ where: { id: Number(id) } })
-    return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true })
 }

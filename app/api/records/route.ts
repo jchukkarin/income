@@ -1,15 +1,37 @@
-import { prisma } from '@/lib/prisma'
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
+import { prisma } from "@/lib/prisma"
 
-
+// GET: ดึงรายการทั้งหมด
 export async function GET() {
-const data = await prisma.record.findMany()
-return NextResponse.json(data)
+    const records = await prisma.record.findMany({
+        orderBy: { date: "desc" },
+    })
+
+    return NextResponse.json(records)
 }
 
-
+// POST: เพิ่มรายการใหม่
 export async function POST(req: Request) {
-const body = await req.json()
-const data = await prisma.record.create({ data: body })
-return NextResponse.json(data)
+    try {
+        const body = await req.json()
+
+        // Validate required fields
+        if (!body.amount || !body.date) {
+            return NextResponse.json({ error: "Missing amount or date" }, { status: 400 })
+        }
+
+        const record = await prisma.record.create({
+            data: {
+                type: body.type,
+                amount: Number(body.amount), // Ensure it's a number
+                reason: body.reason || '',
+                date: new Date(body.date),
+            },
+        })
+
+        return NextResponse.json(record)
+    } catch (error) {
+        console.error("Failed to create record:", error)
+        return NextResponse.json({ error: String(error) }, { status: 500 })
+    }
 }
