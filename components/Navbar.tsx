@@ -21,7 +21,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                 >
                     <Bars3Icon className="h-6 w-6" />
                 </button>
-                <h1 className="text-xl text-gray-700 font-bold">Income Tracker</h1>
+                <h1 className="text-xl text-black font-bold">Income Tracker</h1>
             </div>
 
             <div className="flex gap-6">
