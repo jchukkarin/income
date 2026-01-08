@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Providers } from '@/components/providers'
-import './globals.css'
+import '@/styles/index.css'
 import AppLayout from '@/components/AppLayout'
 
 
